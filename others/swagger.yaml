@@ -1,0 +1,200 @@
+swagger: "2.0"
+info:
+  description: "A sample code for feedback management system"
+  version: "1.0.0"
+  title: "Feedback Management System"
+basePath: "/fms"
+paths:
+  /events:
+     get:
+      tags:
+      - "Event Details"
+      summary: "Get total events on clicking view"
+      description: "All the events are listed when clicked on view after login"
+      operationId: "allEvents"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Event"
+        400:
+          description: "Invalid status value"
+        404:
+          description: "Page not found"
+     post:
+      tags:
+      - "Event Details"
+      summary: "Add a new event"
+      description: ""
+      operationId: "addEvent"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Event that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Event"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+              $ref: "#/definitions/Event"
+        400:
+          description: "Invalid status value"
+        404:
+          description: "Page not found"
+     put:
+        tags:
+        - "Event Details"
+        summary: "Update an existing event"
+        description: ""
+        operationId: "updateEvent"
+        consumes:
+        - "application/json"
+        - "application/xml"
+        produces:
+        - "application/xml"
+        - "application/json"
+        parameters:
+        - in: "body"
+          name: "body"
+          description: "Event that needs to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/Event"
+        responses:
+          200:
+            description: "Successful Operation"
+            schema:
+                $ref: "#/definitions/Event"
+          400:
+            description: "Invalid status value"
+          404:
+            description: "Page not found"
+          405:
+            description: "Validation exception"   
+  '/events/{eventId}':
+     get:
+      tags:
+      - "Event Details"
+      summary: "Get the specific event detail"
+      description: "The event detail listed are depending upon the id selected"
+      operationId: "eventId"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "eventId"
+        in: "path"
+        description: "ID of event to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+              $ref: "#/definitions/Event"
+        400:
+          description: "Invalid status value"
+        404:
+          description: "Page not found"
+  /dashboard:
+     get:
+      tags:
+      - "Dashboard Details"
+      summary: "Get all details on the dashboard"
+      description: "All the details on the dashboard are listed after login"
+      operationId: "dashboardDetails"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "Successful Operation"
+          schema:
+              $ref: "#/definitions/Dashboard"
+        400:
+          description: "Invalid status value"
+        404:
+          description: "Page not found"
+definitions:
+  Event:
+    type: "object"
+    required:
+    - "EventId"
+    - "Month"
+    - "BaseLocation"
+    - "CouncilName"
+    - "BeneficiaryName"
+    - "EventName"
+    - "EventDate"
+    - "BusinessUnit"
+    - "Status"
+    - "VenueAddress"
+    - "TotalVolunteers"
+    - "TotalVolunteerHours"
+    - "TotalTravelHours"
+    properties:
+      EventId:
+        type: "string"
+      Month:
+        type: "string"
+        example: "January"
+      BaseLocation:
+        type: "string"
+        example: "United Kingdom"
+      CouncilName:
+       type: "string"
+      BeneficiaryName:
+        type: "string"
+      EventName:
+        type: "string"
+      EventDate:
+        type: "string"
+        format: date-time
+      BusinessUnit:
+        type: "string"
+      Status:
+        type: "string"
+      VenueAddress:
+        type: "string"
+      TotalVolunteers:
+        type: "integer"
+      TotalVolunteerHours:
+        type: "integer"
+      TotalTravelHours:
+         type: "integer"
+    xml:
+      name: "Event"
+  Dashboard:
+    type: "object"
+    required:
+    - "TotalEvents"
+    - "LivesImpacted"
+    - "TotalVolunteers"
+    - "TotalParticipants"
+    properties:
+      TotalEvents:
+        type: "string"
+      LivesImpacted:
+        type: "string"
+      TotalVolunteers:
+        type: "string"
+      TotalParticipants:
+        type: "string"
+    xml:
+      name: "Dashboard"
+      
+  
